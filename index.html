@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conchita Floristería | Ramos y arreglos florales con entrega el mismo día</title>
+  <meta name="description" content="Conchita Floristería: más de 15 años creando ramos y arreglos con flores frescas de calidad. Entrega el mismo día en Bahía de Banderas y servicios para eventos especiales." />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuentes / Iconos / AOS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- GSAP + ScrollTrigger + Lenis -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.40/bundled/lenis.min.js"></script>
+
+  <style>
+    :root{
+    --bg-900:#0e0e0f;
+    --gold-500:#ecad29;
+    --text-100:#ffffff;
+    --text-300:#ffffffcc;
+    --glass:rgba(17,17,17,0.45);
+    --glass-strong:rgba(17,17,17,0.72);
+    --border:rgba(255,255,255,0.12);
+    --border-strong:rgba(255,255,255,0.18);
+    --nav-offset: 0px;
+    --slider-gap: 16px; /* Desktop */
+  }
+  @media (max-width: 992px){ :root{ --slider-gap: 36px; } }
+
+  *{box-sizing:border-box}
+  body{ margin:0; background:#0f0f10; color:#fff; font-family:"Poppins",sans-serif; }
+
+  /* === Botón global reutilizable === */
+  .btn-custom{
+    border:1px solid var(--border);
+    padding:10px 14px;
+    border-radius:999px;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    color:#fff;
+    text-decoration:none;
+    background:transparent;
+    transition: background .2s, border-color .2s, color .2s, transform .15s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-custom:hover{ transform: translateY(-1px); }
+  .btn-custom.gold{ background:var(--gold-500); border-color:var(--gold-500); color:#111; font-weight:700; }
+  .btn-custom.outline{ border-color:var(--gold-500); }
+  .btn-custom.outline:hover{ background: var(--gold-500); color:#111; }
+
+  /* === NAV === */
+  .site-nav{
+    position: fixed; top:12px; left:50%; transform: translateX(-50%);
+    width: min(1180px, 92vw);
+    padding:12px 16px; border-radius:16px; background: var(--glass);
+    border:1px solid var(--border); backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.28), inset 0 0 0 1px rgba(255,255,255,.03);
+    z-index:90;
+    transition: background .25s, border-color .25s, box-shadow .25s, padding .25s, transform .25s;
+  }
+  .site-nav::after{
+    content:""; position:absolute; left:10px; right:10px; bottom:-1px; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(236,173,41,.55), transparent);
+  }
+  .site-nav.is-compact{ background: var(--glass-strong); border-color: var(--border-strong); box-shadow: 0 18px 36px rgba(0,0,0,.40); padding:8px 14px; }
+
+  .navbar-brand.brand{ display:flex; align-items:center; gap:10px; color: var(--text-100); text-decoration:none; font-family: "Playfair Display", serif; font-weight:700; letter-spacing:.5px; }
+  .brand .logo{ width:38px; height:38px; border-radius:999px; display:grid; place-items:center; font-weight:800; color:#111;
+    background: linear-gradient(135deg,#3a2e10,#d7a72b); box-shadow: inset 0 0 0 2px rgba(255,215,128,.25), 0 6px 18px rgba(0,0,0,.35); }
+
+  .nav-links{ align-items:center; }
+  .nav-links .nav-link{
+    position:relative; display:inline-flex; align-items:center; gap:8px;
+    font-size:14px; color:var(--text-300) !important; padding:10px 12px; border-radius:12px;
+    transition: color .2s, transform .2s; white-space:nowrap;
+  }
+  .nav-links .nav-link:hover{ color:#fff !important; transform: translateY(-1px); }
+  .nav-links .nav-link::after{
+    content:""; position:absolute; left:12px; right:12px; bottom:6px; height:2px;
+    background: linear-gradient(90deg,transparent,var(--gold-500),transparent);
+    transform: scaleX(0); transform-origin:center; transition: transform .25s;
+  }
+  .nav-links .nav-link:hover::after{ transform: scaleX(1); }
+  .nav-links .nav-link.active{
+    color:#fff !important; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .nav-links .nav-link.active::after{ transform: scaleX(1); }
+  .nav-links .nav-link:focus-visible{ outline: 3px solid rgba(236,173,41,.4); outline-offset:3px; border-radius:14px; }
+
+  .site-nav .btn-custom{ backdrop-filter: blur(8px); }
+  .navbar-dark .navbar-toggler{ border-color: var(--border); }
+  .navbar-toggler{ padding:.35rem .6rem; border-radius:12px; backdrop-filter: blur(8px); }
+  .navbar-toggler:focus{ box-shadow: 0 0 0 3px rgba(236,173,41,.35); }
+
+  .navbar-collapse{ gap: 12px; }
+  @media (max-width: 991.98px){
+    .site-nav{ width: min(100%, 94vw); }
+    .navbar-collapse{
+      position:absolute; left:0; right:0; top:100%;
+      margin-top:10px; padding:12px; background: rgba(18,18,18,.92); border:1px solid var(--border-strong);
+      border-radius:14px; backdrop-filter: blur(12px); box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    }
+    .navbar-collapse .nav-links{ flex-direction: column; align-items: stretch; }
+    .navbar-collapse .nav-links .nav-link{ padding:12px 14px; }
+    .navbar-collapse .nav-cta{ padding-top: 10px; margin-top: 6px; border-top:1px solid var(--border); display:flex; gap:8px; flex-wrap:wrap; }
+  }
+
+  /* === SLIDER === */
+  .sliderbody{
+    position: relative; overflow: hidden; width: 100%;
+    margin-top: calc(var(--nav-offset) + var(--slider-gap));
+    height: calc(100vh - (var(--nav-offset) + var(--slider-gap)));
+    background-color:#101011; color:#FFFFFFDD;
+    border-radius: 22px; box-shadow: 0 20px 50px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);
+  }
+
+  /* Slides */
+  .cardsl{
+    position: absolute; inset:0 0 0 0;
+    background-position: center; background-size: 100%;
+    border-radius: 22px; overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,.55);
+    filter: saturate(1.02) contrast(1.02);
+    z-index: 10;
+  }
+  .cardsl::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(80% 60% at 50% 60%, rgba(0,0,0,.25), rgba(0,0,0,.55) 70%, rgba(0,0,0,.75)),
+      linear-gradient(90deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.25) 30%, rgba(0,0,0,.1) 60%, rgba(0,0,0,0) 80%);
+    opacity:.85;
+  }
+  .cardsl.active{ filter: saturate(1.08) contrast(1.05); }
+  .cardsl.active::after{
+    content:""; position:absolute; left:0; right:0; top:0; height:4px; opacity:.7;
+    background: linear-gradient(90deg, transparent, rgba(236,173,41,.8), transparent);
+  }
+
+  .cardsl-content{ position: absolute; color: #FFFFFFDD; z-index: 30; }
+  .content-title-1{ font-weight: 600; font-size: 20px; font-family: "Oswald", sans-serif; }
+
+  /* Texto principal (glass) */
+  .details{
+    position: absolute; top: 50%;
+    left: clamp(16px, 7vw, 80px);
+    transform: translateY(-50%);
+    width: min(560px, 92vw);
+    padding: 22px; border-radius: 18px;
+    background: linear-gradient(180deg, rgba(16,16,16,.58), rgba(14,14,14,.52));
+    border: 1px solid var(--border-strong); backdrop-filter: blur(10px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);
+    pointer-events: none; z-index: 40;
+  }
+  .details .title-1{
+    font-family:"Playfair Display", serif; font-weight:700; line-height:1.05;
+    font-size: clamp(28px, 4.6vw, 54px); letter-spacing:.2px; text-shadow: 0 6px 28px rgba(0,0,0,.35);
+  }
+  .details .title-1::after{
+    content:""; display:block; margin-top:10px; width:72px; height:3px;
+    background: linear-gradient(90deg, var(--gold-500), rgba(236,173,41,.2)); border-radius:6px;
+  }
+  .details .desc{ color:var(--text-300); margin-top:12px; font-size: clamp(14px, 1.6vw, 16px); }
+  .details .cta{ margin-top:16px; pointer-events:auto; }
+  .details .cta .discover{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:700; letter-spacing:.4px;
+    color:#111; background: var(--gold-500); padding:12px 16px; border-radius:999px;
+    box-shadow: 0 10px 24px rgba(236,173,41,.25), inset 0 -2px 0 rgba(0,0,0,.2);
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  }
+  .details .cta .discover:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
+  @media (max-width: 970px) {
+    .cardsl-content { display: none; }
+    .cardsl:not(.active) { display: none; }
+    .details{
+      left: 16px; right: 16px; width: auto; padding:18px;
+      bottom: 18px; top:auto; transform:none; border-radius: 16px;
+    }
+  }
+
+  /* Indicador superior */
+  .indicator{
+    position: absolute; left: 0; right: 0; top: 0; height: 4px;
+    background: linear-gradient(90deg, rgba(236,173,41,.0), rgba(236,173,41,1), rgba(236,173,41,.0));
+    filter: drop-shadow(0 0 6px rgba(236,173,41,.7)); opacity:.9; z-index: 70;
+  }
+
+  /* Paginación */
+  .pagination{
+    position: absolute;
+    left: clamp(16px, 7vw, 80px);
+    bottom: clamp(14px, 2.5vh, 24px);
+    display: inline-flex; align-items:center; gap:14px; z-index: 60;
+  }
+  .pagination > .arrow{
+    width: 46px; height: 46px; border-radius: 999px; border: 1px solid var(--border-strong);
+    display: grid; place-items: center; background: rgba(12,12,12,.55); backdrop-filter: blur(8px);
+    transition: transform .15s, background .2s, box-shadow .2s, border-color .2s;
+    box-shadow: 0 10px 20px rgba(0,0,0,.35); cursor: pointer;
+  }
+  .pagination > .arrow:hover{ transform: translateY(-1px); border-color: rgba(236,173,41,.5); background: rgba(18,18,18,.7); }
+  .pagination > .arrow svg{ width: 22px; height: 22px; stroke-width: 2; color: #ffffffee; }
+
+  .pagination .progress-sub-container{ margin-left: 8px; width: clamp(160px, 36vw, 420px); height: 46px; display:flex; align-items:center; }
+  .pagination .progress-sub-background{ width: 100%; height: 3px; background-color: #ffffff22; border-radius: 999px; overflow:hidden; }
+  .pagination .progress-sub-foreground{
+    height: 100%; background:
+      linear-gradient(90deg, rgba(255,255,255,.15), rgba(255,255,255,.35) 20%, rgba(236,173,41,.85) 60%, rgba(236,173,41,1));
+    box-shadow: 0 0 14px rgba(236,173,41,.45); transition: width .4s ease;
+  }
+  .pagination .slide-numbers{ width: 44px; height: 44px; overflow: hidden; position: relative; border-radius:12px; }
+  .pagination .slide-numbers .item{
+    width: 44px; height: 44px; position: absolute; color: #fff; top: 0; left: 0; display: grid; place-items: center;
+    font-size: 18px; font-weight: 700; background: rgba(18,18,18,.6); border:1px solid var(--border-strong); border-radius:12px; backdrop-filter: blur(6px);
+  }
+
+  @media (max-width: 970px){
+    .pagination{ top: 14px; bottom: auto; left: 16px; right: 16px; }
+    .pagination .progress-sub-container{ width: calc(100% - 120px); }
+  }
+
+  /* ===== Catálogo (v2) ===== */
+  .catalogo{ background:#0f0f10; color:#fff; padding:88px 0 96px; position:relative; z-index:1; }
+  .catalogo .container{ width:min(1200px,92vw); margin:0 auto; }
+  .catalogo .head{ display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:28px; }
+  .catalogo h2{ font-family:"Playfair Display",serif; font-size:clamp(28px,4vw,40px); margin:0; }
+  .catalogo p.sub{ color:var(--text-300); margin:6px 0 0; }
+
+  .catalogo .grid{ display:grid; gap:22px; grid-template-columns: repeat(3, minmax(0,1fr)); }
+  @media (max-width: 992px){ .catalogo .grid{ grid-template-columns: repeat(2, 1fr);} }
+  @media (max-width: 620px){ .catalogo .grid{ grid-template-columns: 1fr; } }
+
+  .card-cat{
+    display:flex; flex-direction:column; height:100%;
+    border:1px solid var(--border); background:#151515; border-radius:16px; overflow:hidden;
+    box-shadow:0 10px 24px rgba(0,0,0,.35);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card-cat:hover{ transform: translateY(-2px); border-color: var(--border-strong); box-shadow:0 18px 36px rgba(0,0,0,.45); }
+
+  .card-cat .img{ position:relative; aspect-ratio: 4 / 3; background:#0f0f10; overflow:hidden; }
+  .card-cat .img picture, .card-cat .img img{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .card-cat .img img{ object-fit: contain; object-position:center; }
+  .card-cat .img[data-fit="cover"] img{ object-fit: cover; }
+
+  .card-cat .img::after{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(70% 55% at 50% 30%, transparent, rgba(0,0,0,.35));
+    pointer-events:none; transition: opacity .25s ease; opacity:.35;
+  }
+  .card-cat:hover .img::after{ opacity:.15; }
+
+  .card-cat .badge{
+    position:absolute; top:10px; left:10px;
+    background:linear-gradient(90deg, rgba(236,173,41,.2), rgba(236,173,41,.9));
+    border:1px solid rgba(236,173,41,.55);
+    color:#111; font-weight:700; font-size:12px; padding:6px 10px; border-radius:999px; letter-spacing:.3px;
+    box-shadow:0 6px 16px rgba(236,173,41,.18), inset 0 -1px 0 rgba(0,0,0,.25);
+  }
+  .card-cat .fav-btn{
+    position:absolute; top:10px; right:10px; width:38px; height:38px; border-radius:999px;
+    display:grid; place-items:center; background:rgba(18,18,18,.65); border:1px solid var(--border-strong); color:#fff;
+    backdrop-filter: blur(8px); cursor:pointer; transition: transform .2s, background .2s, border-color .2s;
+  }
+  .card-cat .fav-btn:hover{ transform: translateY(-1px); border-color: rgba(236,173,41,.5); }
+  .card-cat .fav-btn.is-active{ background:var(--gold-500); color:#111; border-color:var(--gold-500); }
+
+  .card-cat .quick{
+    position:absolute; left:10px; right:10px; bottom:10px;
+    display:flex; gap:8px; transform: translateY(120%); transition: transform .25s ease;
+  }
+  .card-cat:hover .quick{ transform: translateY(0%); }
+  .card-cat .quick .btn-custom{ flex:1; justify-content:center; padding:10px 12px; }
+
+  .card-cat .info{ padding:14px 16px 16px; display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .card-cat .meta{ min-width:0; }
+  .card-cat .tag{ font-size:12px; color:var(--text-300); letter-spacing:.5px; margin-bottom:4px; }
+  .card-cat .title{
+    font-family:"Playfair Display",serif; font-size:18px; line-height:1.2; margin:0;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card-cat .title span{ color:var(--gold-500); }
+
+  .card-cat .price{
+    align-self:flex-start; white-space:nowrap;
+    background:rgba(236,173,41,.12); color:#fff; border:1px solid rgba(236,173,41,.35);
+    padding:8px 10px; border-radius:12px; font-weight:700; font-size:14px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .card-cat .price small{ opacity:.8; font-weight:600; }
+  .card-cat :where(a, button):focus-visible{ outline:3px solid rgba(236,173,41,.4); outline-offset:3px; border-radius:14px; }
+
+  /* ===== SECCIONES BASE ===== */
+  .section{ background:#0f0f10; color:#fff; padding:88px 0 96px; position:relative; z-index:1; }
+  .section .container{ width:min(1200px,92vw); margin:0 auto; }
+  .section .head{ display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:28px; }
+  .section h2{ font-family:"Playfair Display",serif; font-size:clamp(28px,4vw,40px); margin:0; }
+  .section p.sub{ color:var(--text-300); margin:6px 0 0; }
+  .section .grid{ display:grid; gap:22px; grid-template-columns: repeat(3, minmax(0,1fr)); }
+  @media (max-width: 992px){ .section .grid{ grid-template-columns: repeat(2, 1fr);} }
+  @media (max-width: 620px){ .section .grid{ grid-template-columns: 1fr; } }
+
+  /* Servicios (reutilizado) */
+  .card-service{ display:flex; flex-direction:column; border:1px solid var(--border); background:#151515; border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(0,0,0,.35); }
+  .card-service .media{ position:relative; aspect-ratio: 4/3; display:grid; place-items:center; background:linear-gradient(135deg,#121212,#1b1b1c); }
+  .card-service .media i{ font-size:52px; color:#fff; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
+  .card-service .info{ padding:16px; display:flex; flex-direction:column; gap:10px; }
+  .card-service .title{ font-family:"Playfair Display",serif; font-size:20px; margin:0; }
+  .card-service .desc{ color:var(--text-300); font-size:14px; }
+  .card-service ul{ margin:0; padding-left:18px; color:var(--text-300); font-size:14px; }
+  .card-service .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+
+  /* Tarjeta simple (para Nosotros) */
+  .about-card{ display:flex; flex-direction:column; border:1px solid var(--border); background:#151515; border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(0,0,0,.35); }
+  .about-card .body{ padding:16px; display:flex; flex-direction:column; gap:10px; }
+  .about-card h3{ font-family:"Playfair Display",serif; font-size:20px; margin:0; }
+  .about-card .meta{ font-size:12px; color:var(--text-300); }
+  .about-card p, .about-card li{ color:var(--text-300); font-size:14px; }
+  .about-card ul{ margin:0; padding-left:18px; }
+  .social-bubbles{ display:flex; flex-wrap:wrap; gap:10px; }
+  .social-bubbles a{ display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border-strong); border-radius:999px; padding:10px 14px; text-decoration:none; color:#fff; background:#121212; }
+  .social-bubbles a:hover{ border-color:var(--gold-500); }
+
+  /* Contacto */
+  .contacto .grid{ grid-template-columns: 1.2fr .8fr .8fr; }
+  @media (max-width: 992px){ .contacto .grid{ grid-template-columns: 1fr; } }
+  .card-contact, .card-form{ border:1px solid var(--border); background:#151515; border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(0,0,0,.35); }
+  .card-contact .body{ padding:16px; }
+  .card-contact h3{ font-family:"Playfair Display",serif; font-size:20px; margin:0 0 8px; }
+  .card-contact .item{ display:flex; align-items:flex-start; gap:10px; color:var(--text-300); font-size:14px; margin:8px 0; }
+  .card-contact .item i{ margin-top:2px; }
+  .card-contact .cta{ margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+
+  .card-form .body{ padding:16px; }
+  .card-form h3{ font-family:"Playfair Display",serif; font-size:20px; margin:0 0 8px; }
+  .form-dark .form-control, .form-dark textarea, .form-dark select{ background:#111; color:#fff; border:1px solid var(--border-strong); border-radius:12px; padding:10px 12px; }
+  .form-dark .form-control:focus, .form-dark textarea:focus{ outline:none; box-shadow:0 0 0 3px rgba(236,173,41,.25); border-color:var(--gold-500); }
+  .form-dark label{ font-size:12px; color:var(--text-300); margin-bottom:6px; }
+  .form-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+
+  /* ====== NOSOTROS v2 (añadido) ====== */
+  .nosotros.nosotros-v2{
+    padding: 96px 0 104px;
+    position: relative;
+    background:
+      radial-gradient(70% 50% at 20% 10%, rgba(236,173,41,.10), transparent 60%),
+      radial-gradient(60% 45% at 90% 0%, rgba(236,173,41,.08), transparent 65%),
+      #0f0f10;
+  }
+  .section .underline{
+    width:80px; height:3px; margin-top:10px; border-radius:6px;
+    background: linear-gradient(90deg, var(--gold-500), rgba(236,173,41,.2));
+  }
+  .about-wrap{
+    display:grid; gap:28px;
+    grid-template-columns: 1.1fr .9fr;
+    align-items: stretch;
+  }
+  @media (max-width: 992px){ .about-wrap{ grid-template-columns: 1fr; } }
+  .about-copy{
+    border:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(21,21,21,.92), rgba(17,17,17,.88));
+    border-radius:18px; padding:22px;
+    box-shadow:0 18px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);
+  }
+  .about-copy h3{
+    font-family:"Playfair Display",serif; font-size:clamp(26px,3.3vw,36px); margin:0 0 6px;
+  }
+  .about-sub{ color:var(--text-300); margin:0 0 14px; }
+  .about-badges{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 8px; }
+  .about-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 12px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.3px;
+    background:rgba(236,173,41,.14); border:1px solid rgba(236,173,41,.35);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .coverage{ margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    padding:6px 10px; border-radius:999px; font-size:12px; color:#fff;
+    background:#151515; border:1px solid var(--border-strong);
+  }
+  .about-stats{ margin-top:16px; display:flex; flex-wrap:wrap; gap:10px; }
+  .stat{
+    padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.04);
+    border:1px solid var(--border); min-width:160px;
+  }
+  .stat .k{ font-weight:800; font-size:18px; }
+  .stat small{ color:var(--text-300); display:block; margin-top:4px; }
+  .about-visual{
+    position:relative; overflow:hidden; border-radius:18px;
+    border:1px solid var(--border); background:#121212; min-height:320px;
+    box-shadow:0 18px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);
+  }
+  .about-visual picture, .about-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .about-visual::after{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(60% 50% at 50% 30%, transparent, rgba(0,0,0,.55));
+  }
+  .values{ margin-top:28px; display:grid; gap:16px; grid-template-columns: repeat(3, minmax(0,1fr)); }
+  @media (max-width: 992px){ .values{ grid-template-columns: 1fr; } }
+  .value-card{
+    border:1px solid var(--border); border-radius:16px; background:#151515;
+    box-shadow:0 10px 24px rgba(0,0,0,.35); padding:16px;
+  }
+  .value-card h5{ margin:0 0 6px; font-family:"Playfair Display",serif; font-size:18px; }
+  .value-card p{ margin:0; color:var(--text-300); font-size:14px; }
+
+  /* === Burbujas sociales fijas === */
+  .social-bubbles-fixed{
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+  }
+  .social-bubbles-fixed a{
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid var(--border-strong);
+    background: #121212;
+    box-shadow: 0 12px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+    transition: transform .18s ease, filter .18s ease;
+  }
+  .social-bubbles-fixed a:hover{ transform: translateY(-2px); filter: brightness(1.05); }
+  .social-bubbles-fixed a:focus-visible{ outline: 3px solid rgba(236,173,41,.45); outline-offset: 3px; }
+  .bubble-wa{ background:#25D366; } /* WhatsApp */
+  .bubble-ig{
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  } /* Instagram */
+  .bubble-fb{ background:#1877F2; } /* Facebook */
+
+  /* === Carrito en Sidebar (reemplaza .cart-fab y .cart-panel) === */
+  #cartOverlay{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.5); backdrop-filter:blur(2px);
+    opacity:0; visibility:hidden; transition:opacity .2s ease;
+    z-index:9998;
+  }
+  #cartOverlay.show{ opacity:1; visibility:visible; }
+  .cart-drawer{
+    position:fixed; right:-420px; top:0; bottom:0;
+    width:min(420px,92vw);
+    background:#151515; border-left:1px solid var(--border-strong);
+    box-shadow:-20px 0 60px rgba(0,0,0,.45);
+    z-index:9999; display:flex; flex-direction:column;
+    transition:right .25s ease;
+  }
+  .cart-drawer.show{ right:0; }
+  .cart-header{
+    padding:14px 16px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .cart-header strong{ font-family:"Playfair Display",serif; font-size:18px; }
+  .cart-body{ flex:1; overflow:auto; padding:12px 16px; }
+  .cart-footer{ border-top:1px solid var(--border); padding:12px 16px; }
+  .cart-empty{
+    opacity:.75; text-align:center; padding:40px 10px; font-size:14px;
+    border:1px dashed rgba(255,255,255,.12); border-radius:12px;
+  }
+  .cart-item{
+    display:grid; grid-template-columns: 1fr auto; gap:6px 10px;
+    padding:10px 0; border-bottom:1px dashed rgba(255,255,255,.08);
+  }
+  .cart-item:last-child{ border-bottom:none; }
+  .cart-item .item-title{ font-weight:600; }
+  .cart-item .item-price{ opacity:.8; font-size:13px; }
+  .cart-item .item-line-total{ font-weight:800; }
+  .item-actions{ grid-column:1 / -1; display:flex; align-items:center; gap:8px; }
+  .qty{
+    display:inline-flex; align-items:center; gap:2px;
+    border:1px solid var(--border-strong); border-radius:999px; padding:0 6px;
+  }
+  .qty button{
+    background:transparent; border:0; width:28px; height:28px; color:#fff; cursor:pointer;
+  }
+  .qty span{ min-width:26px; text-align:center; font-weight:700; }
+  .remove-btn{
+    border:1px solid var(--border-strong); border-radius:10px; padding:6px 10px;
+    background:#121212; cursor:pointer; display:inline-flex; align-items:center; gap:6px;
+  }
+  .remove-btn:hover{ border-color:var(--gold-500); }
+  .total-row{ display:flex; justify-content:space-between; margin-bottom:8px; }
+  .footer-actions{ display:flex; gap:8px; }
+
+  /* Regla base para el logo (fuera del NAV) */
+  .brand .logo img{
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    display: block;
+    border-radius: 999px; /* por si tu PNG tiene fondo */
+  }
+
+  /* ===========================
+     LOGO más grande en NAV sin crecer el alto del navbar
+     =========================== */
+  .site-nav .brand .logo{
+    width: 38px;               /* mantiene el alto del nav */
+    height: 38px;
+    position: relative;
+    overflow: visible;         /* permite que el logo salga de su caja */
+    padding-right: 18px;       /* separa el logo del texto al crecer */
+    background: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .site-nav .brand .logo img{
+    position: absolute;        /* saca la imagen del flujo del layout */
+    left: 0;
+    top: 50%;
+    height: 100%;              /* base: 38px de alto */
+    width: auto;
+    transform: translateY(-50%) scale(1.7); /* ajusta este scale para el tamaño deseado */
+    transform-origin: left center;
+    border-radius: 0 !important;
+    display: block;
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav navbar navbar-expand-lg navbar-dark" role="navigation" aria-label="Principal">
+<a class="navbar-brand brand" href="index.html" title="Conchita Floristería">
+  <span class="logo">
+    <img src="imagen/logoconchita.png" alt="Conchita Floristería">
+  </span>
+  <span>Conchita Floristería</span>
+</a>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Alternar navegación">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="mainNav">
+      <ul class="navbar-nav nav-links me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#catalogo">Catálogo</a></li>
+        <li class="nav-item"><a class="nav-link" href="#eventos">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2 nav-cta">
+        <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-heart"></i> Ver Mas</a>
+
+        <a href="#contacto" class="btn-custom outline"><i class="bi bi-whatsapp"></i> Contáctanos</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SLIDER -->
+  <div id="inicio" class="sliderbody">
+    <div class="indicator"></div>
+    <div id="demo"></div>
+
+    <!-- SOLO ESTOS DOS contenedores de texto -->
+    <div class="details" id="details-odd">
+      <div class="title-box-1"><div class="title-1"></div></div>
+      <div class="desc"></div>
+      <div class="cta"><a class="discover" href="">Ver más</a></div>
+    </div>
+    <div class="details" id="details-even">
+      <div class="title-box-1"><div class="title-1"></div></div>
+      <div class="desc"></div>
+      <div class="cta"><a class="discover" href="">Ver más</a></div>
+    </div>
+
+    <div class="pagination" id="pagination" aria-label="Paginación del slider">
+      <div class="arrow arrow-left" role="button" aria-label="Anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+      </div>
+      <div class="arrow arrow-right" role="button" aria-label="Siguiente">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+      </div>
+      <div class="progress-sub-container" aria-hidden="true">
+        <div class="progress-sub-background"><div class="progress-sub-foreground"></div></div>
+      </div>
+      <div class="slide-numbers" id="slide-numbers" aria-hidden="true"></div>
+    </div>
+
+    <div class="cover" style="position:absolute; inset:0; background:#fff; z-index:100;"></div>
+  </div>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo" class="catalogo">
+    <div class="container">
+      <div class="head">
+        <div>
+          <h2>Lo Más Pedido del Catálogo</h2>
+          <p class="sub">Rosas y arreglos</p>
+        </div>
+        <a href="carrito.html" class="btn-custom outline"><i class="bi bi-bag"></i> Ver carrito</a>
+      </div>
+
+      <div class="grid" role="list">
+        <!-- 6 tarjetas de ejemplo (se mantienen igual que antes)... -->
+        <!-- Tarjeta 1 -->
+        <article class="card-cat" role="listitem">
+          <div class="img" data-fit="contain">
+            <picture>
+              <source type="image/avif" srcset="imagen/bahia de banderas.avif">
+              <img src="imagen/bahia de banderas.avif"
+                   alt="Arreglo Bahía de Banderas en caja premium"
+                   loading="lazy" decoding="async" width="1200" height="900"
+                   sizes="(max-width:620px) 100vw, (max-width:992px) 50vw, 33vw">
+            </picture>
+           
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Agregar a favoritos">
+              <i class="bi bi-heart"></i>
+            </button>
+            <div class="quick" aria-hidden="true">
+              <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-plus"></i> Agregar</a>
+              
+            </div>
+          </div>
+          <div class="info">
+            <div class="meta">
+              <div class="tag">Caja de rosas</div>
+              <h3 class="title">Bahía de Banderas <span>edición dorada</span></h3>
+            </div>
+            <div class="price">$ <span>1,500</span></div>
+          </div>
+        </article>
+
+        <!-- Tarjeta 2 -->
+        <article class="card-cat" role="listitem">
+          <div class="img">
+            <picture>
+              <source type="image/avif" srcset="imagen/floresteriaconchita1.avif">
+              <img src="imagen/floresteriaconchita1.avif"
+                   alt="Rosas blancas elegantes con follaje"
+                   loading="lazy" decoding="async" width="1200" height="900"
+                   sizes="(max-width:620px) 100vw, (max-width:992px) 50vw, 33vw">
+            </picture>
+            
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Agregar a favoritos">
+              <i class="bi bi-heart"></i>
+            </button>
+            <div class="quick">
+              <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-plus"></i> Agregar</a>
+              
+            </div>
+          </div>
+          <div class="info">
+            <div class="meta">
+              <div class="tag">Rosas</div>
+              <h3 class="title">Rosas blancas <span>premium</span></h3>
+            </div>
+            <div class="price">$ <span>1,600</span></div>
+          </div>
+        </article>
+
+        <!-- Tarjeta 3 -->
+        <article class="card-cat" role="listitem">
+          <div class="img">
+            <picture>
+              <source type="image/avif" srcset="imagen/floresteriaconchita2 (2).avif">
+              <img src="imagen/floresteriaconchita2 (2).avif"
+                   alt="Ramo mixto elegante con rosas y lirios"
+                   loading="lazy" decoding="async" width="1200" height="900"
+                   sizes="(max-width:620px) 100vw, (max-width:992px) 50vw, 33vw">
+            </picture>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Agregar a favoritos">
+              <i class="bi bi-heart"></i>
+            </button>
+            <div class="quick">
+              <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-plus"></i> Agregar</a>
+              
+            </div>
+          </div>
+          <div class="info">
+            <div class="meta">
+              <div class="tag">Ramo mixto</div>
+              <h3 class="title">Ramo mixto <span>elegante</span></h3>
+            </div>
+            <div class="price">$ <span>2,100</span></div>
+          </div>
+        </article>
+
+        <!-- Tarjeta 4 -->
+        <article class="card-cat" role="listitem">
+          <div class="img" data-fit="cover">
+            <picture>
+              <source type="image/avif" srcset="imagen/floresteriaconchita2.avif">
+              <img src="imagen/floresteriaconchita2.avif"
+                   alt="Caja de rosas rojas con moño"
+                   loading="lazy" decoding="async" width="1200" height="900"
+                   sizes="(max-width:620px) 100vw, (max-width:992px) 50vw, 33vw">
+            </picture>
+            
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Agregar a favoritos">
+              <i class="bi bi-heart"></i>
+            </button>
+            <div class="quick">
+              <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-plus"></i> Agregar</a>
+             
+            </div>
+          </div>
+          <div class="info">
+            <div class="meta">
+              <div class="tag">Caja de rosas</div>
+              <h3 class="title">Rosas rojas <span>con moño</span></h3>
+            </div>
+            <div class="price">$ <span>3,600</span></div>
+          </div>
+        </article>
+
+        <!-- Tarjeta 5 -->
+        <article class="card-cat" role="listitem">
+          <div class="img">
+            <picture>
+              <source type="image/avif" srcset="imagen/mezcales flores.avif">
+              <img src="imagen/mezcales flores.avif"
+                   alt="Arreglo premium con lirios y acentos dorados"
+                   loading="lazy" decoding="async" width="1200" height="900"
+                   sizes="(max-width:620px) 100vw, (max-width:992px) 50vw, 33vw">
+            </picture>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Agregar a favoritos">
+              <i class="bi bi-heart"></i>
+            </button>
+            <div class="quick">
+              <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-plus"></i> Agregar</a>
+             
+            </div>
+          </div>
+          <div class="info">
+            <div class="meta">
+              <div class="tag">Arreglo premium</div>
+              <h3 class="title">Lirios y follaje <span>de temporada</span></h3>
+            </div>
+            <div class="price">$ <span>2,600</span></div>
+          </div>
+        </article>
+
+        <!-- Tarjeta 6 -->
+        <article class="card-cat" role="listitem">
+          <div class="img">
+            <picture>
+              <source type="image/avif" srcset="imagen/conchita.avif">
+              <img src="imagen/conchita.avif"
+                   alt="Ramo arcoíris colorido con papel premium"
+                   loading="lazy" decoding="async" width="1200" height="900"
+                   sizes="(max-width:620px) 100vw, (max-width:992px) 50vw, 33vw">
+            </picture>
+            <button class="fav-btn" type="button" aria-pressed="false" aria-label="Agregar a favoritos">
+              <i class="bi bi-heart"></i>
+            </button>
+            <div class="quick">
+              <a href="carrito.html" class="btn-custom gold"><i class="bi bi-bag-plus"></i> Agregar</a>
+             
+            </div>
+          </div>
+          <div class="info">
+            <div class="meta">
+              <div class="tag">Ramo especial</div>
+              <h3 class="title">Ramo arcoíris <span>colorido</span></h3>
+            </div>
+            <div class="price">$ <span>4,000</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- === SERVICIOS === -->
+  <section id="eventos" class="section servicios">
+    <div class="container">
+      <div class="head">
+        <div>
+          <h2>Servicios</h2>
+          <p class="sub">Envíos el mismo día, decoraciones para días especiales y venta de flores frescas</p>
+        </div>
+        <a href="https://wa.me/523221525246" target="_blank" rel="noopener" class="btn-custom gold"><i class="bi bi-whatsapp"></i> Cotizar por WhatsApp</a>
+      </div>
+
+      <div class="grid">
+        <!-- Envíos -->
+        <article class="card-service">
+          <div class="media"><i class="bi bi-truck"></i></div>
+          <div class="info">
+            <h3 class="title">Envíos a domicilio</h3>
+            <p class="desc">Cobertura en Bahía de Banderas: Mezcales, Valle Dorado, San José del Valle y zonas cercanas.</p>
+            <ul>
+              <li>Entrega el mismo día (según disponibilidad)</li>
+              <li>Tarjeta con dedicatoria incluida</li>
+              <li>Seguimiento por mensaje</li>
+            </ul>
+            <div class="actions">
+              <a href="https://wa.me/523221525246?text=Hola%20Conchita%20Florister%C3%ADa,%20quiero%20programar%20un%20env%C3%ADo" class="btn-custom outline" target="_blank" rel="noopener"><i class="bi bi-chat-dots"></i> Pedir envío</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Decoraciones -->
+        <article class="card-service">
+          <div class="media"><i class="bi bi-balloon-heart"></i></div>
+          <div class="info">
+            <h3 class="title">Decoraciones y Días Especiales</h3>
+            <p class="desc">Bodas, XV, cumpleaños, aniversarios y fechas como San Valentín o Día de las Madres.</p>
+            <ul>
+              <li>Ramos, centros de mesa y backdrops</li>
+              <li>Asesoría de color y estilo</li>
+              <li>Montaje en sitio</li>
+            </ul>
+            <div class="actions">
+              <a href="https://wa.me/523221525246?text=Hola,%20me%20interesa%20una%20decoraci%C3%B3n%20para%20mi%20evento" class="btn-custom outline" target="_blank" rel="noopener"><i class="bi bi-calendar2-heart"></i> Cotizar evento</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Venta de flores -->
+        <article class="card-service">
+          <div class="media"><i class="bi bi-flower1"></i></div>
+          <div class="info">
+            <h3 class="title">Venta de flores</h3>
+            <p class="desc">Arreglos listos para llevar y pedidos personalizados en nuestras sucursales.</p>
+            <ul>
+              <li>Rosas, lirios, girasoles, mix de temporada</li>
+              <li>Personalización de tamaño y color</li>
+              <li>Recoge en tienda o solicita envío</li>
+            </ul>
+            <div class="actions">
+              <a href="#catalogo" class="btn-custom gold"><i class="bi bi-bag-heart"></i> Ver catálogo</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- === NOSOTROS (rediseñado, sin redes ni sucursales) === -->
+  <section id="nosotros" class="section nosotros nosotros-v2">
+    <div class="container">
+      <div class="head" data-aos="fade-up">
+        <div>
+          <h2>Nosotros</h2>
+          <p class="sub">Conchita Floristería — flores que hablan por ti</p>
+          <div class="underline"></div>
+        </div>
+        <div class="d-none d-lg-block">
+          <a class="btn-custom gold" href="#catalogo"><i class="bi bi-bag-heart"></i> Ver catálogo</a>
+        </div>
+      </div>
+
+      <!-- Hero dividido -->
+      <div class="about-wrap">
+        <article class="about-copy" data-aos="fade-right">
+          <h3>Más de 15 años creando detalles inolvidables</h3>
+          <p class="about-sub">
+            Somos una florería local con experiencia en ramos, cajas premium y decoraciones para toda ocasión.
+            Cuidamos cada entrega con dedicación porque <strong>“Donde los detalles hablan por ti”</strong>.
+          </p>
+
+          <div class="about-badges">
+            <span class="about-pill"><i class="bi bi-award"></i> Calidad &amp; diseño</span>
+            <span class="about-pill"><i class="bi bi-truck"></i> Entregas a domicilio</span>
+            <span class="about-pill"><i class="bi bi-heart"></i> Personalización a tu estilo</span>
+          </div>
+
+          <div class="coverage" aria-label="Cobertura">
+            <span class="chip">Mezcales</span>
+            <span class="chip">Valle Dorado</span>
+            <span class="chip">San José del Valle</span>
+            <span class="chip">San Juan de Abajo</span>
+          </div>
+
+          <!-- Estadísticas sin sucursales -->
+          <div class="about-stats" role="list">
+            <div class="stat" role="listitem">
+              <div class="k">15+ años</div>
+              <small>Experiencia en arreglos y decoraciones</small>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="k">Entrega a domicilio</div>
+              <small>Con dedicatoria incluida</small>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="k">Arreglos a medida</div>
+              <small>Ramos, cajas y montajes especiales</small>
+            </div>
+          </div>
+
+          <div class="about-actions">
+            <a class="btn-custom outline" href="#catalogo"><i class="bi bi-bag"></i> Explorar catálogo</a>
+            <a class="btn-custom" href="#contacto"><i class="bi bi-geo-alt"></i> Ir a contacto</a>
+          </div>
+        </article>
+
+        <aside class="about-visual" data-aos="fade-left" aria-hidden="true">
+          <picture>
+            <source type="image/avif" srcset="imagen/floresteriaconchita1.avif">
+            <img src="imagen/floresteriaconchita1.avif" alt="Arreglo floral premium en estudio" loading="lazy" decoding="async">
+          </picture>
+        </aside>
+      </div>
+
+      <!-- Valores / Servicios -->
+      <div class="values" aria-label="Nuestros valores y servicios">
+        <article class="value-card" data-aos="fade-up">
+          <h5>Diseño &amp; Calidad</h5>
+          <p>Flores frescas y curaduría de color para cada ocasión.</p>
+        </article>
+        <article class="value-card" data-aos="fade-up" data-aos-delay="80">
+          <h5>Atención Cercana</h5>
+          <p>Pedidos por catálogo o totalmente personalizados.</p>
+        </article>
+        <article class="value-card" data-aos="fade-up" data-aos-delay="160">
+          <h5>Entrega Confiable</h5>
+          <p>Cobertura en Bahía de Banderas y seguimiento de tu envío.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- === CONTACTO === -->
+  <section id="contacto" class="section contacto">
+    <div class="container">
+      <div class="head">
+        <div>
+          <h2>Contacto</h2>
+          <p class="sub">Escríbenos por WhatsApp o visítanos en tienda</p>
+        </div>
+        <a href="https://wa.me/523221525246" class="btn-custom gold" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Abrir WhatsApp</a>
+      </div>
+
+      <div class="grid">
+        <!-- NUEVA SUCURSAL (reemplaza al formulario) -->
+        <article class="card-contact">
+          <div class="body">
+            <h3>San Juan de Abajo</h3>
+            <div class="item"><i class="bi bi-geo-alt"></i> Calle 20 de Noviembre #13B, Centro, San Juan de Abajo</div>
+            <div class="item"><i class="bi bi-telephone"></i> 322 378 0910</div>
+            <div class="item"><i class="bi bi-balloon-heart"></i> Arreglos y decoraciones</div>
+            <div class="cta">
+              <a href="https://wa.me/523223780910" class="btn-custom outline" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Escribir</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sucursal Mezcales -->
+        <article class="card-contact">
+          <div class="body">
+            <h3>Mezcales</h3>
+            <div class="item"><i class="bi bi-geo-alt"></i> Av. Tepic–Vallarta #47, Mezcales, Bahía de Banderas</div>
+            <div class="item"><i class="bi bi-telephone"></i> 322 152 5246</div>
+            <div class="item"><i class="bi bi-truck"></i> Envíos en zona y alrededores</div>
+            <div class="cta">
+              <a href="https://wa.me/523221525246" class="btn-custom gold" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Escribir</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sucursal San José del Valle -->
+        <article class="card-contact">
+          <div class="body">
+            <h3>San José del Valle</h3>
+            <div class="item"><i class="bi bi-geo-alt"></i> Av. Michoacán #39, San José del Valle, Bahía de Banderas</div>
+            <div class="item"><i class="bi bi-telephone"></i> 322 267 0455</div>
+            <div class="item"><i class="bi bi-balloon-heart"></i> Arreglos y decoraciones</div>
+            <div class="cta">
+              <a href="https://wa.me/523222670455" class="btn-custom outline" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Escribir</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- === FOOTER === -->
+  <footer class="section" style="padding:36px 0; border-top:1px solid var(--border);">
+    <div class="container">
+      <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+        <a class="navbar-brand brand" href="#inicio" title="Conchita Floristería">
+          <span class="logo">C</span><span>Conchita Floristería</span>
+        </a>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn-custom outline" href="#catalogo"><i class="bi bi-bag"></i> Catálogo</a>
+          <a class="btn-custom outline" href="#eventos"><i class="bi bi-flower1"></i> Servicios</a>
+          <a class="btn-custom outline" href="#nosotros"><i class="bi bi-people"></i> Nosotros</a>
+          <a class="btn-custom outline" href="#contacto"><i class="bi bi-geo-alt"></i> Contacto</a>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <a class="btn-custom" href="https://www.instagram.com/floreria_conchita1/" target="_blank" rel="noopener"><i class="bi bi-instagram"></i> Instagram</a>
+          <a class="btn-custom" href="https://www.facebook.com/ConchitaFloristeria/" target="_blank" rel="noopener"><i class="bi bi-facebook"></i> Facebook</a>
+        </div>
+      </div>
+      <div class="mt-3" style="opacity:.7; font-size:12px;">© 2025 Conchita Floristería — Bahía de Banderas, Nayarit.</div>
+    </div>
+  </footer>
+
+  <!-- ===== JS ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+  function setNavOffset(){
+    const nav = document.querySelector('.site-nav');
+    if(!nav) return;
+    document.documentElement.style.setProperty('--nav-offset', Math.ceil(nav.getBoundingClientRect().bottom) + 8 + 'px');
+  }
+  window.addEventListener('load', setNavOffset);
+  window.addEventListener('resize', setNavOffset);
+  document.addEventListener('shown.bs.collapse', setNavOffset);
+  document.addEventListener('hidden.bs.collapse', setNavOffset);
+
+  /* compact nav */
+  (function(){
+    const nav = document.querySelector('.site-nav');
+    if(!nav) return;
+    let ticking = false;
+    function onScroll(){
+      const y = window.scrollY || window.pageYOffset;
+      if(y > 10) nav.classList.add('is-compact'); else nav.classList.remove('is-compact');
+      if(!ticking){ window.requestAnimationFrame(() => { setNavOffset(); ticking = false; }); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+  })();
+
+  /* active link on view */
+  (function(){
+    const links = document.querySelectorAll('.nav-links .nav-link[href^="#"]');
+    if(!links.length) return;
+    const map = new Map();
+    links.forEach(a => { const id = a.getAttribute('href').replace('#',''); if(id) map.set(id, a); });
+    const sections = []; map.forEach((_, id) => { const el = document.getElementById(id); if(el) sections.push(el); });
+    if(!sections.length) return;
+    const activate = (id) => {
+      links.forEach(a => { a.classList.remove('active'); a.removeAttribute('aria-current'); });
+      const link = map.get(id); if(link){ link.classList.add('active'); link.setAttribute('aria-current','page'); }
+    };
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio);
+      if(visible[0]) activate(visible[0].target.id);
+    }, { root: null, rootMargin: '-40% 0px -55% 0px', threshold: [0, .25, .5, .75, 1] });
+    sections.forEach(s => io.observe(s));
+  })();
+  </script>
+
+  <!-- Slider + GSAP (se mantiene igual) -->
+  <script>
+  const data = [
+    { title:'Rosas rojas', description:'Bouquet clásico de rosas rojas premium, perfecto para ocasiones especiales.', image:'https://images.pexels.com/photos/18539132/pexels-photo-18539132.jpeg?auto=compress&cs=tinysrgb&w=2000&h=1200&fit=crop', link:'<a class="discover" href="carrito.html">Comprar rosas</a>' },
+    { title:'Rosas blancas', description:'Elegancia atemporal en tonos marfil; ideales para un detalle fino.', image:'https://images.pexels.com/photos/21797583/pexels-photo-21797583.jpeg?auto=compress&cs=tinysrgb&w=2000&h=1200&fit=crop', link:'<a class="discover" href="carrito.html">Comprar rosas</a>' },
+    { title:'Rosas rosa', description:'Delicadeza y suavidad en un arreglo romántico en tonos rosa.', image:'https://images.pexels.com/photos/20793980/pexels-photo-20793980.jpeg?auto=compress&cs=tinysrgb&w=2000&h=1200&fit=crop', link:'<a class="discover" href="carrito.html">Comprar rosas</a>' },
+    { title:'Rosas amarillas', description:'Un bouquet vibrante y luminoso que transmite alegría.', image:'https://images.pexels.com/photos/20285347/pexels-photo-20285347.jpeg?auto=compress&cs=tinysrgb&w=2000&h=1200&fit=crop', link:'<a class="discover" href="carrito.html">Comprar rosas</a>' },
+    { title:'Rosas rojas elegantes', description:'Arreglo de rosas rojas con follaje, sofisticado y con presencia.', image:'https://images.pexels.com/photos/32640875/pexels-photo-32640875.jpeg?auto=compress&cs=tinysrgb&w=2000&h=1200&fit=crop', link:'<a class="discover" href="carrito.html">Comprar rosas</a>' },
+    { title:'Rosas rosa (close-up)', description:'Texturas y pétalos en primer plano para un look muy floral.', image:'https://images.pexels.com/photos/19454005/pexels-photo-19454005.jpeg?auto=compress&cs=tinysrgb&w=2000&h=1200&fit=crop', link:'<a class="discover" href="carrito.html">Comprar rosas</a>' }
+  ];
+
+  function updateActiveCardClass(activeIndex) {
+    data.forEach((_, i) => {
+      const card = document.getElementById(`card${i}`);
+      if (!card) return;
+      if (i === activeIndex) card.classList.add('active'); else card.classList.remove('active');
+    });
+  }
+
+  const _ = (id)=>document.getElementById(id);
+  const cards = data.map((i, index)=>`<div class="cardsl" id="card${index}" style="background-image:url(${encodeURI(i.image)})"></div>`).join('');
+  const cardContents = data.map((i, index)=>`<div class="cardsl-content" id="card-content-${index}"><div class="content-title-1">${i.title}</div></div>`).join('');
+  const slideNumbers = data.map((_, index)=>`<div class="item" id="slide-item-${index}">${index+1}</div>`).join('');
+  _('demo').innerHTML =  cards + cardContents;
+  _('slide-numbers').innerHTML =  slideNumbers;
+
+  const set = gsap.set;
+  function getCard(index) { return `#card${index}`; }
+  function getCardContent(index) { return `#card-content-${index}`; }
+  function getSliderItem(index) { return `#slide-item-${index}`; }
+
+  function animate(target, duration, properties) {
+    return new Promise((resolve) => { gsap.to(target, { ...properties, duration: duration, onComplete: resolve }); });
+  }
+
+  let order = data.map((_, i) => i);
+  let detailsEven = true;
+
+  let offsetTop = 200, offsetLeft = 700, cardWidth = 200, cardHeight = 300, gap = 40, numberSize = 50;
+  const ease = "sine.inOut";
+
+  function availableHeight(){
+    const styles = getComputedStyle(document.documentElement);
+    const off = parseFloat(styles.getPropertyValue('--nav-offset')) || 0;
+    const gapv = parseFloat(styles.getPropertyValue('--slider-gap')) || 0;
+    return window.innerHeight - off - gapv;
+  }
+
+  /* Ken Burns */
+  function startKenBurns(index){
+    gsap.fromTo(getCard(index),
+      { backgroundSize: '105%', backgroundPosition: '50% 48%' },
+      { backgroundSize: '112%', backgroundPosition: '50% 52%', duration: 3, ease, overwrite: 'auto' }
+    );
+  }
+  function resetKenBurns(exceptIndex){
+    order.forEach(i=>{ if(i !== exceptIndex){ gsap.set(getCard(i), { backgroundSize: '100%', backgroundPosition: '50% 50%' }); } });
+  }
+
+  function init() {
+    const [active, ...rest] = order;
+    updateActiveCardClass(active);
+
+    const detailsActive = detailsEven ? "#details-even" : "#details-odd";
+    const detailsInactive = detailsEven ? "#details-odd" : "#details-even";
+
+    const { innerWidth: width } = window;
+    const height = availableHeight();
+
+    offsetTop = height * 0.05;
+    offsetLeft = Math.max(480, width * 0.45);
+
+    gsap.set("#pagination", { y: 30, opacity: 0 });
+
+    gsap.set(getCard(active), { x: 0, y: 0, width: window.innerWidth, height: height });
+    gsap.set(getCardContent(active), { x: 0, y: 0, opacity: 0 });
+    gsap.set(detailsActive, { opacity: 0, zIndex: 42, x: -200 });
+    gsap.set(detailsInactive, { opacity: 0, zIndex: 32 });
+    gsap.set(`${detailsInactive} .title-1`, { y: 100 });
+    gsap.set(`${detailsInactive} .desc`, { y: 50 });
+    gsap.set(`${detailsInactive} .discover`, { y: 60 });
+
+    const progressW = document.querySelector('.progress-sub-container')?.offsetWidth || 420;
+    gsap.set(".progress-sub-foreground", { width: progressW * (1 / order.length) * (active + 1) });
+
+    rest.forEach((i, index) => {
+      gsap.set(getCard(i), {
+        x: offsetLeft + 400 + index * (cardWidth + gap),
+        y: offsetTop, width: cardWidth, height: cardHeight, zIndex: 20, borderRadius: 14,
+      });
+      gsap.set(getCardContent(i), {
+        x: offsetLeft + 400 + index * (cardWidth + gap),
+        zIndex: 30, y: offsetTop + cardHeight - 100,
+      });
+      gsap.set(getSliderItem(i), { x: (index + 1) * numberSize });
+    });
+
+    gsap.set(".indicator", { x: -window.innerWidth });
+
+    const startDelay = 0.6;
+    gsap.to(".cover", { x: width + 400, delay: 0.5, ease, onComplete: () => { setTimeout(() => { loop(); }, 400); } });
+    rest.forEach((i, index) => {
+      gsap.to(getCard(i), { x: offsetLeft + index * (cardWidth + gap), zIndex: 20, delay: 0.05 * index + startDelay, ease });
+      gsap.to(getCardContent(i), { x: offsetLeft + index * (cardWidth + gap), zIndex: 30, delay: 0.05 * index + startDelay, ease });
+    });
+    gsap.to("#pagination", { y: 0, opacity: 1, ease, delay: startDelay });
+    gsap.to(detailsActive, { opacity: 1, x: 0, ease, delay: startDelay });
+
+    startKenBurns(active); resetKenBurns(active);
+  }
+
+  let clicks = 0;
+
+  function step() {
+    return new Promise((resolve) => {
+      order.push(order.shift());
+      detailsEven = !detailsEven;
+
+      const detailsActive = detailsEven ? "#details-even" : "#details-odd";
+      const detailsInactive = detailsEven ? "#details-odd" : "#details-even";
+
+      document.querySelector(`${detailsActive} .title-1`).textContent = data[order[0]].title;
+      document.querySelector(`${detailsActive} .desc`).textContent = data[order[0]].description;
+      document.querySelector(`${detailsActive} .cta`).innerHTML = data[order[0]].link;
+
+      gsap.set(detailsActive, { zIndex: 42 });
+      gsap.to(detailsActive, { opacity: 1, delay: 0.35, ease });
+      gsap.to(`${detailsActive} .title-1`, { y: 0, delay: 0.12, duration: 0.6, ease });
+      gsap.to(`${detailsActive} .desc`, { y: 0, delay: 0.25, duration: 0.4, ease });
+      gsap.to(`${detailsActive} .discover`, { y: 0, delay: 0.32, duration: 0.4, ease, onComplete: resolve });
+      gsap.set(detailsInactive, { zIndex: 32 });
+
+      const [active, ...rest] = order;
+      updateActiveCardClass(active);
+
+      const prv = rest[rest.length - 1];
+
+      gsap.set(getCard(prv), { zIndex: 10 });
+      gsap.set(getCard(active), { zIndex: 15 });
+      gsap.to(getCard(prv), { scale: 1.5, ease });
+
+      gsap.to(getCardContent(active), { y: offsetTop + cardHeight - 10, opacity: 0, duration: 0.3, ease });
+
+      const progressW = document.querySelector('.progress-sub-container')?.offsetWidth || 420;
+      gsap.to(".progress-sub-foreground", { width: progressW * (1 / order.length) * (active + 1), ease });
+      gsap.to(getSliderItem(active), { x: 0, ease });
+      gsap.to(getSliderItem(prv), { x: -numberSize, ease });
+
+      gsap.to(getCard(active), {
+        x: 0, y: 0, ease, width: window.innerWidth, height: availableHeight(), borderRadius: 22,
+        onComplete: () => {
+          const xNew = offsetLeft + (rest.length - 1) * (cardWidth + gap);
+          gsap.set(getCard(prv), { x: xNew, y: offsetTop, width: cardWidth, height: cardHeight, zIndex: 20, borderRadius: 14, scale: 1 });
+          gsap.set(getCardContent(prv), { x: xNew, y: offsetTop + cardHeight - 100, opacity: 1, zIndex: 30 });
+          gsap.set(getSliderItem(prv), { x: rest.length * numberSize });
+          gsap.set(detailsInactive, { opacity: 0 });
+          gsap.set(`${detailsInactive} .title-1`, { y: 100 });
+          gsap.set(`${detailsInactive} .desc`, { y: 50 });
+          gsap.set(`${detailsInactive} .discover`, { y: 60 });
+          clicks -= 1; if (clicks > 0) { step(); }
+        },
+      });
+
+      rest.forEach((i, index) => {
+        if (i !== prv) {
+          const xNew = offsetLeft + index * (cardWidth + gap);
+          gsap.set(getCard(i), { zIndex: 20 });
+          gsap.to(getCard(i), { x: xNew, y: offsetTop, width: cardWidth, height: cardHeight, ease, delay: 0.08 * (index + 1) });
+          gsap.to(getCardContent(i), { x: xNew, y: offsetTop + cardHeight - 100, opacity: 1, zIndex: 30, ease, delay: 0.08 * (index + 1) });
+          gsap.to(getSliderItem(i), { x: (index + 1) * numberSize, ease });
+        }
+      });
+
+      startKenBurns(active); resetKenBurns(active);
+    });
+  }
+
+  function stepBack() {
+    return new Promise((resolve) => {
+      order.unshift(order.pop());
+      detailsEven = !detailsEven;
+
+      const detailsActive = detailsEven ? "#details-even" : "#details-odd";
+      const detailsInactive = detailsEven ? "#details-odd" : "#details-even";
+
+      document.querySelector(`${detailsActive} .title-1`).textContent = data[order[0]].title;
+      document.querySelector(`${detailsActive} .desc`).textContent = data[order[0]].description;
+      document.querySelector(`${detailsActive} .cta`).innerHTML = data[order[0]].link;
+
+      gsap.set(detailsActive, { zIndex: 42 });
+      gsap.to(detailsActive, { opacity: 1, delay: 0.35, ease });
+      gsap.to(`${detailsActive} .title-1`, { y: 0, delay: 0.12, duration: 0.6, ease });
+      gsap.to(`${detailsActive} .desc`, { y: 0, delay: 0.25, duration: 0.4, ease });
+      gsap.to(`${detailsActive} .discover`, { y: 0, delay: 0.32, duration: 0.4, ease, onComplete: resolve });
+      gsap.set(detailsInactive, { zIndex: 32 });
+
+      const [active, ...rest] = order;
+      updateActiveCardClass(active);
+
+      const next = rest[0];
+
+      gsap.set(getCard(next), { zIndex: 10 });
+      gsap.set(getCard(active), { zIndex: 15 });
+      gsap.to(getCard(next), { scale: 1.5, ease });
+
+      gsap.to(getCardContent(active), { y: offsetTop + cardHeight - 10, opacity: 0, duration: 0.3, ease });
+
+      const progressW = document.querySelector('.progress-sub-container')?.offsetWidth || 420;
+      gsap.to(".progress-sub-foreground", { width: progressW * (1 / order.length) * (active + 1), ease });
+      gsap.to(getSliderItem(active), { x: 0, ease });
+      gsap.to(getSliderItem(next), { x: numberSize, ease });
+
+      gsap.to(getCard(active), {
+        x: 0, y: 0, ease, width: window.innerWidth, height: availableHeight(), borderRadius: 22,
+        onComplete: () => {
+          const xNew = offsetLeft;
+          gsap.set(getCard(next), { x: xNew + (rest.length) * (cardWidth + gap), y: offsetTop, width: cardWidth, height: cardHeight, zIndex: 20, borderRadius: 14, scale: 1 });
+          gsap.set(getCardContent(next), { x: xNew + (rest.length) * (cardWidth + gap), y: offsetTop + cardHeight - 100, opacity: 1, zIndex: 30 });
+          gsap.set(getSliderItem(next), { x: (rest.length + 1) * numberSize });
+
+          gsap.set(detailsInactive, { opacity: 0 });
+          gsap.set(`${detailsInactive} .title-1`, { y: 100 });
+          gsap.set(`${detailsInactive} .desc`, { y: 50 });
+          gsap.set(`${detailsInactive} .discover`, { y: 60 });
+
+          clicks -= 1; if (clicks > 0) { stepBack(); }
+        },
+      });
+
+      rest.forEach((i, index) => {
+        if (i !== next) {
+          const xNew = offsetLeft + (index + 1) * (cardWidth + gap);
+          gsap.set(getCard(i), { zIndex: 20 });
+          gsap.to(getCard(i), { x: xNew, y: offsetTop, width: cardWidth, height: cardHeight, ease, delay: 0.08 * (index + 1) });
+          gsap.to(getCardContent(i), { x: xNew, y: offsetTop + cardHeight - 100, opacity: 1, zIndex: 30, ease, delay: 0.08 * (index + 1) });
+          gsap.to(getSliderItem(i), { x: (index + 2) * numberSize, ease });
+        }
+      });
+
+      startKenBurns(active); resetKenBurns(active);
+    });
+  }
+
+  async function loop() {
+    await animate(".indicator", 2, { x: 0 });
+    await animate(".indicator", 0.8, { x: window.innerWidth, delay: 0.3 });
+    gsap.set(".indicator", { x: -window.innerWidth });
+    await step();
+    loop();
+  }
+  async function loadImage(src) {
+    return new Promise((resolve, reject) => { let img = new Image(); img.onload = () => resolve(img); img.onerror = reject; img.src = src; });
+  }
+  async function loadImages() { return Promise.all(data.map(({ image }) => loadImage(image))); }
+  async function start() {
+    try { await loadImages(); init(); }
+    catch (error) { console.error("One or more images failed to load", error); }
+  }
+  start();
+
+  document.querySelector('.arrow-left').addEventListener('click', () => { clicks += 1; stepBack(); });
+  document.querySelector('.arrow-right').addEventListener('click', () => { clicks += 1; step(); });
+
+  window.addEventListener('resize', () => {
+    const progressW = document.querySelector('.progress-sub-container')?.offsetWidth || 420;
+    const [active] = order;
+    gsap.set(".progress-sub-foreground", { width: progressW * (1 / order.length) * (active + 1) });
+  });
+  </script>
+
+  <!-- JS opcional: toggle del corazón de favoritos -->
+  <script>
+    document.querySelector('#catalogo .grid')?.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.fav-btn');
+      if(!btn) return;
+      const active = btn.classList.toggle('is-active');
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.innerHTML = active ? '<i class="bi bi-heart-fill"></i>' : '<i class="bi bi-heart"></i>';
+    });
+  </script>
+
+  <!-- Inicialización AOS con guard -->
+  <script>
+    if (window.AOS && !window.__AOS_INITIALIZED__) {
+      AOS.init({ duration:700, once:true, offset:80 });
+      window.__AOS_INITIALIZED__ = true;
+    }
+  </script>
+
+  <!-- Burbujas de redes sociales (incluye WhatsApp) -->
+  <div class="social-bubbles-fixed" aria-label="Accesos rápidos a redes sociales">
+    <a class="bubble-wa" href="https://wa.me/523221525246" target="_blank" rel="noopener" aria-label="WhatsApp Conchita Floristería">
+      <i class="bi bi-whatsapp" style="font-size:26px;"></i>
+    </a>
+    <a class="bubble-ig" href="https://www.instagram.com/floreria_conchita1/" target="_blank" rel="noopener" aria-label="Instagram Conchita Floristería">
+      <i class="bi bi-instagram" style="font-size:26px;"></i>
+    </a>
+    <a class="bubble-fb" href="https://www.facebook.com/ConchitaFloristeria/" target="_blank" rel="noopener" aria-label="Facebook Conchita Floristería">
+      <i class="bi bi-facebook" style="font-size:26px;"></i>
+    </a>
+  </div>
+
+  <!-- === Carrito en Sidebar (sustituye el mini carrito flotante) === -->
+  <script>
+  (function(){
+    const CKEY = 'conchita_cart_v1';
+    const mxn  = new Intl.NumberFormat('es-MX', { style:'currency', currency:'MXN', maximumFractionDigits:0 });
+
+    // --------- Helpers de estado ---------
+    function slug(s){
+      return (s||'').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    }
+    function readRaw(){
+      try{ return JSON.parse(localStorage.getItem(CKEY)) || {}; } catch(_){ return {}; }
+    }
+    function writeRaw(v){ localStorage.setItem(CKEY, JSON.stringify(v)); }
+
+    // Migración desde formato antiguo {count,total,items:[{t,p}]}
+    function migrateIfNeeded(obj){
+      if (obj.items && obj.items.length && obj.items[0].t !== undefined) {
+        const map = new Map();
+        obj.items.forEach(it=>{
+          const id = slug(it.t)+'|'+(it.p|0);
+          const prev = map.get(id) || { id, title: it.t, price: it.p|0, qty: 0 };
+          prev.qty += 1;
+          map.set(id, prev);
+        });
+        return { items: [...map.values()] };
+      }
+      if (Array.isArray(obj.items) && obj.items.length && obj.items[0].id) {
+        return { items: obj.items.map(i=>({ id:i.id, title:i.title||i.t||'Artículo', price:i.price|0, qty: Math.max(1, i.qty|0) })) };
+      }
+      return { items: [] };
+    }
+
+    function getCart(){
+      const m = migrateIfNeeded(readRaw());
+      m.items = m.items.filter(i => i && i.title && Number.isFinite(i.price) && i.price>=0 && i.qty>0);
+      return m;
+    }
+    function setCart(c){
+      writeRaw(c);
+      render();
+      announce('Carrito actualizado.');
+    }
+    function addToCart({ title, price }){
+      const c = getCart();
+      const id = slug(title)+'|'+(price|0);
+      const idx = c.items.findIndex(i => i.id===id);
+      if (idx>=0) c.items[idx].qty += 1;
+      else c.items.unshift({ id, title, price: price|0, qty: 1 });
+      setCart(c);
+      openCart();
+      announce(`${title} agregado.`);
+    }
+    function changeQty(id, delta){
+      const c = getCart();
+      const it = c.items.find(i=>i.id===id);
+      if(!it) return;
+      it.qty += delta;
+      if (it.qty<=0) c.items = c.items.filter(i=>i.id!==id);
+      setCart(c);
+    }
+    function removeItem(id){
+      const c = getCart();
+      c.items = c.items.filter(i=>i.id!==id);
+      setCart(c);
+    }
+    function clearCart(){ setCart({ items: [] }); }
+    function totals(){
+      const c = getCart();
+      const count = c.items.reduce((a,b)=>a+b.qty, 0);
+      const total = c.items.reduce((a,b)=>a+b.qty*b.price, 0);
+      return { count, total };
+    }
+
+    // --------- UI base (overlay + drawer) ----------
+    const overlay = document.createElement('div');
+    overlay.id = 'cartOverlay';
+    document.body.appendChild(overlay);
+
+    const drawer = document.createElement('aside');
+    drawer.className = 'cart-drawer';
+    drawer.setAttribute('role','dialog');
+    drawer.setAttribute('aria-modal','true');
+    drawer.setAttribute('aria-labelledby','cartTitle');
+    drawer.innerHTML = `
+      <div class="cart-header">
+        <strong id="cartTitle"><i class="bi bi-bag"></i> Tu carrito</strong>
+        <button type="button" class="btn-custom outline btn-close-cart"><i class="bi bi-x-lg"></i> Cerrar</button>
+      </div>
+      <div class="cart-body" id="cartItems"></div>
+      <div class="cart-footer">
+        <div class="total-row"><span>Artículos</span><strong class="val-count">0</strong></div>
+        <div class="total-row"><span>Total</span><strong class="val-total">$0</strong></div>
+        <div class="footer-actions">
+          <a href="carrito.html" class="btn-custom gold" style="flex:1; justify-content:center;">
+            <i class="bi bi-bag-check"></i> Comprar
+          </a>
+          <button type="button" class="btn-custom outline btn-clear" style="flex:1; justify-content:center;">
+            <i class="bi bi-x-circle"></i> Vaciar
+          </button>
+        </div>
+      </div>
+      <div id="cartLive" class="visually-hidden" aria-live="polite"></div>
+    `;
+    document.body.appendChild(drawer);
+
+    // botón "Carrito" en el menú (se agrega sin tocar tu HTML)
+    (function injectNavButton(){
+      const navCta = document.querySelector('.nav-cta');
+      if(!navCta || document.getElementById('cartNavBtn')) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.id = 'cartNavBtn';
+      btn.className = 'btn-custom outline';
+      btn.innerHTML = '<i class="bi bi-bag"></i> Carrito';
+      btn.addEventListener('click', openCart);
+      navCta.prepend(btn);
+    })();
+
+    // --------- Abrir / Cerrar ----------
+    function openCart(){
+      overlay.classList.add('show');
+      drawer.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      drawer.querySelector('.btn-close-cart')?.focus();
+    }
+    function closeCart(){
+      overlay.classList.remove('show');
+      drawer.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    overlay.addEventListener('click', closeCart);
+    drawer.querySelector('.btn-close-cart').addEventListener('click', closeCart);
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeCart(); });
+
+    function announce(msg){
+      const live = document.getElementById('cartLive');
+      if(live){ live.textContent = ''; setTimeout(()=>{ live.textContent = msg; }, 10); }
+    }
+
+    // --------- Render ----------
+    function render(){
+      const c = getCart();
+      const cont = document.getElementById('cartItems');
+      const { count, total } = totals();
+
+      if(!cont) return;
+
+      if(!c.items.length){
+        cont.innerHTML = `<div class="cart-empty">Tu carrito está vacío</div>`;
+      } else {
+        cont.innerHTML = c.items.map(it => `
+          <div class="cart-item" data-id="${it.id}">
+            <div class="item-title">${it.title}</div>
+            <div class="item-line-total">${mxn.format(it.qty * it.price)}</div>
+            <div class="item-price">${mxn.format(it.price)} c/u</div>
+            <div class="item-actions">
+              <div class="qty" role="group" aria-label="Cantidad">
+                <button type="button" class="btn-dec" aria-label="Disminuir">−</button>
+                <span class="q" aria-live="polite">${it.qty}</span>
+                <button type="button" class="btn-inc" aria-label="Aumentar">+</button>
+              </div>
+              <button type="button" class="remove-btn"><i class="bi bi-trash"></i> Quitar</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      drawer.querySelector('.val-count').textContent = count;
+      drawer.querySelector('.val-total').textContent = mxn.format(total);
+    }
+    render();
+
+    // Eventos internos del drawer
+    drawer.addEventListener('click', (e)=>{
+      if (e.target.closest('.btn-clear')) { clearCart(); return; }
+      const item = e.target.closest('.cart-item');
+      if(!item) return;
+      const id = item.dataset.id;
+      if (e.target.closest('.btn-inc'))      { changeQty(id, +1); }
+      else if (e.target.closest('.btn-dec')) { changeQty(id, -1); }
+      else if (e.target.closest('.remove-btn')) { removeItem(id); }
+    });
+
+    // Sumar desde el catálogo y abrir sidebar
+    document.querySelector('#catalogo .grid')?.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.quick .btn-custom.gold');
+      if(!btn) return;
+      e.preventDefault();
+      const card  = btn.closest('.card-cat');
+      const title = card.querySelector('.title')?.textContent.trim() || 'Artículo';
+      const priceText = card.querySelector('.price span')?.textContent || '0';
+      const price = parseInt(priceText.replace(/[^\d]/g,''), 10) || 0;
+      addToCart({ title, price });
+    });
+
+    // Cualquier link a carrito.html abre el sidebar
+// Solo los enlaces marcados con data-open-cart abrirán el sidebar
+document.addEventListener('click', (e)=>{
+  const a = e.target.closest('a[data-open-cart],button[data-open-cart]');
+  if(!a) return;
+  e.preventDefault();
+  openCart();
+});
+
+
+    // Sincronización entre pestañas
+    window.addEventListener('storage', (ev)=>{ if(ev.key===CKEY){ render(); } });
+  })();
+  </script>
+
+</body>
+</html>
